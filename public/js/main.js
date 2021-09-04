@@ -45,7 +45,7 @@ var months = [
 
 
 
-var month=months[currentTime.getMonth() +1];
+var month=months[currentTime.getMonth()];
 var date =currentTime.getDate();
 todaydate.innerText=date+" "+month
 
