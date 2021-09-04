@@ -8,7 +8,8 @@ const datahide=document.getElementsByClassName('middle_layer')
 const day=document.getElementById('day');
 const todaydate=document.getElementById('todaydate');
 
-
+const map=document.getElementById('map');
+console.log(map);
 
 //day
 var weekday = new Array(7);

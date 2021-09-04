@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALi</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+        integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" </head>
+
+<body>
+
+     {{>navbar}}
+
+
+
+  <div id="map"></div>
+
+    
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        
+        
+        
+        const map = L.map('map').setView([23.3441,85.3096],5);
+        
+        
+     var base=   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+base.addTo(map);
+
+var Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	subdomains: 'abcd',
+	minZoom: 1,
+	maxZoom: 16,
+	ext: 'jpg'
+});
+
+
+
+var Dark = L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'fdzUfwHtPl4dT5MtXl6EbnsBZOTMoJSXsj7kyCmumCpRZ3lkSapzTQleB6Iq7OsG'
+});
+
+
+
+
+
+googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+
+//googleStreets.addTo(map);
+
+
+googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+//googleSat.addTo(map);
+
+
+googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+googleTerrain.addTo(map);
+
+
+
+
+
+
+
+
+const te=async(lat,lng)=>{
+
+let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=bc019cd25888c5c39a813405a6cec4e0&units=metric`;
+        const response = await fetch(url);
+        
+         const data =await response.json();
+      
+       const arrData=[data]
+       console.log(arrData);
+var popup=mym.bindPopup(arrData[0].name+" : "+arrData[0].main.temp+"℃   "+arrData[0].weather[0].main).openPopup();
+    popup.addTo(map);
+
+}
+
+
+var mym=L.marker([23.99,83.99]);
+
+
+map.on('click',function(e){
+    console.log(e.latlng.lat +"  "+e.latlng.lng);
+   mym= L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
+te(e.latlng.lat,e.latlng.lng)
+    
+})
+
+
+var baseMaps = {
+    "Base": base,
+    "Dark": Dark,
+    "Streets":googleStreets,
+    "Terrain":googleTerrain,
+    "Satellite":googleSat,
+    "WaterColor":Watercolor
+};
+
+
+L.control.layers(baseMaps).addTo(map);
+        </script>
+</body>
+
+</html>

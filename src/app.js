@@ -30,13 +30,26 @@ app.get("/about",(req,res)=>{
 app.get("/weather",(req,res)=>{
     res.render("weather")
 })
-
+app.get("/maps",(req,res)=>{
+    res.render("maps")
+})
 
 app.get("*",(req,res)=>{
     res.render("404error",{
         errormsg : 'Oops ! Page Not Found'
     })
 })
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(port,()=>{
     console.log("listening to port 8000")

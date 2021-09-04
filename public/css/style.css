@@ -301,3 +301,27 @@ filter: drop-shadow(0 0.5rem 1rem rgba(0, 0, 0,0.3));
     .navbar-toggler {
       background-color: #fff;
   }
+
+  #map{
+    height: 100vh;
+    width: 100%;
+  }
+
+  .leaflet-popup-content-wrapper {
+    font-size: 2rem;
+    word-spacing: 0.632rem;
+    font-weight: 400;
+    font-family: "Piazolla",serif;
+  }
+  .leaflet-control-layers-list{
+    padding: 2rem;
+    font-family:"Piazolla",serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: white;
+    background-color:var(--main-bg);
+    border-radius: 2rem;
+  }
+  .leaflet-control-layers-expanded{
+    border-radius: 2rem;
+  }
